@@ -4,10 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div>
-        <h1>Hi Darshan</h1>
-    </div>
+    <main>
+        <nav>
+            <p class="left">Kanban Board <span>.</span></p>
+            <button>Add New Task</button>
+        </nav>
+        <section class="board">
+            <div id="todo" class="task-column">
+                <div class="task-heading">
+                    <p>Todo</p>
+                    <p>Count: 0</p>
+                </div>
+                <div class="task" draggable="true">
+                    <h2>Task 1</h2>
+                    <p>Description</p>
+                    <button class="delete-btn">Delete</button>
+                </div>
+                <div class="task" draggable="true">
+                    <h2>Task 2</h2>
+                    <p>Description</p>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            </div>
+            <div id="progress" class="task-column">
+                <div class="task-heading">
+                    <p>In Progress</p>
+                    <p>Count: 0</p>
+                </div>
+            </div>
+            <div id="done" class="task-column">
+                <div class="task-heading">
+                    <p>Done</p>
+                    <p>Count: 0</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./script.js"></script>
 </body>
 </html>

@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #000000;
+    --text-clor: #efefef
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    font-family: system-ui;
+}
+
+button {
+    cursor: pointer;
+}
+
+main {
+    height: 100vh;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-clor);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+nav p {
+    font-size: 24px;
+}
+
+nav p span {
+    color: rgb(255, 0, 51);
+    font-size: 20px;
+}
+
+nav button {
+    padding: 10px;
+    border: 1px solid #ffff00;
+    background: #4b4b0c;
+    color: var(--text-clor);
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.task-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+.board {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    height: calc(100% - 90px);
+}
+
+.task-column {
+    height: 100%;
+    background: #141414;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.hover-over {
+    border: 2px dashed var(--text-clor);
+    scale: 1.05;
+}
+
+.task {
+    background: #1f1f1f;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background: #a20000;
+    padding: 6px 10px;
+    border: none;
+    outline: none;
+    color: var(--text-clor);
+    float: right;
+    margin-top: 10px;
+    font-weight: 700;
+}
