@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <main>
         <nav>
             <p class="left">Kanban Board <span>.</span></p>
-            <button>Add New Task</button>
+            <button id="toogle-modal">Add New Task</button>
         </nav>
         <section class="board">
             <div id="todo" class="task-column">
                 <div class="task-heading">
                     <p>Todo</p>
-                    <p>Count: 0</p>
+                    <p>Count: <span class="count">0</span></p>
                 </div>
-                <div class="task" draggable="true">
-                    <h2>Task 1</h2>
-                    <p>Description</p>
-                    <button class="delete-btn">Delete</button>
-                </div>
-                <div class="task" draggable="true">
-                    <h2>Task 2</h2>
-                    <p>Description</p>
-                    <button class="delete-btn">Delete</button>
-                </div>
+
             </div>
             <div id="progress" class="task-column">
                 <div class="task-heading">
                     <p>In Progress</p>
-                    <p>Count: 0</p>
+                    <p>Count: <span class="count">0</span></p>
                 </div>
             </div>
             <div id="done" class="task-column">
                 <div class="task-heading">
                     <p>Done</p>
-                    <p>Count: 0</p>
+                    <p>Count: <span class="count">0</span></p>
                 </div>
             </div>
         </section>
     </main>
 
+    <div class="modal add-new-task">
+        <div class="backdrop"></div>
+        <div class="popup">
+            <h2>Add Your New Task</h2>
+            <input type="text" placeholder="Enter Task Title" id="task-title">
+            <textarea rows="5" placeholder="Enter Task Desription" id="task-desc"></textarea>
+            <button id="add-task-btn" class="add-task-btn">Add Task</button>
+        </div>
+    </div>
+
     <script src="./script.js"></script>
 </body>
+
 </html>
