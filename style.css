@@ -60,6 +60,9 @@ nav button {
     align-items: center;
     padding: 10px;
     gap: 10px;
+    position: sticky;
+    top: -10px;
+    background: #141414;
 }
 
 .board {
@@ -79,6 +82,9 @@ nav button {
     flex-direction: column;
     gap: 10px;
     transition: 0.2s ease-in-out;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    overflow-x: none;
 }
 
 .hover-over {
