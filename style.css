@@ -197,7 +197,7 @@ nav button {
 
 }
 
-@media screen and (max-width:500px) {
+@media screen and (max-width:768px) {
     .board {
         flex-direction: column;
     }
