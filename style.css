@@ -109,6 +109,18 @@ nav button {
     font-weight: 700;
 }
 
+.edit-btn {
+    background: #7cd1ff;
+    padding: 6px 10px;
+    border: none;
+    outline: none;
+    color: #000000;
+    float: right;
+    margin-top: 10px;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
 .add-new-task {
     width: 100%;
     height: 100%;
@@ -168,4 +180,29 @@ nav button {
     outline: 0;
     padding: 8px 16px;
     border-radius: 5px;
+}
+
+.task input,
+.task textarea {
+    width: 100%;
+    padding: 5px;
+    background: #5050505d;
+    border: 1px solid #ffffff;
+    font-family: system-ui;
+    font-size: 16px;
+    color: #ffffff;
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+
+}
+
+@media screen and (max-width:500px) {
+    .board {
+        flex-direction: column;
+    }
+
+    .popup {
+        width: 95%;
+    }
 }

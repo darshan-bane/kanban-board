@@ -5,56 +5,113 @@ const allColumns = [todo, progress, done]
 const taskData = {}
 
 let dragElement = null
-const tasks = document.querySelectorAll('.task')
-tasks.forEach((task) => {
-    task.addEventListener('drag', (e) => {
-        dragElement = task
-    })
-})
 
+// ========== ADD TASK FUNCTION ==========
 function addTask(title, desc, column) {
     const div = document.createElement('div')
     div.classList.add('task')
     div.setAttribute('draggable', 'true')
 
     div.innerHTML = `
-         <h2>${title}</h2>
+        <h2>${title}</h2>
         <p>${desc}</p>
         <button class="delete-btn">Delete</button>
+        <button class="edit-btn">Edit</button>
     `
+
     column.appendChild(div)
 
-    div.addEventListener('drag', (e) => {
+    // drag
+    div.addEventListener('drag', () => {
         dragElement = div
     })
 
-    const deleteBtn = div.querySelector('button')
-    deleteBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        div.remove();
+    // Attach delete + edit buttons
+    attachEvents(div)
+
+    return div
+}
+
+// ========== ATTACH EVENTS (RE-USABLE AFTER EDIT) ==========
+function attachEvents(div) {
+    const deleteBtn = div.querySelector('.delete-btn')
+    const editBtn = div.querySelector('.edit-btn')
+
+    deleteBtn.addEventListener('click', () => {
+        div.remove()
         updateTaskCount()
     })
 
-    return div;
+    editBtn.addEventListener('click', () => enableEdit(div))
 }
 
+// ========== EDIT FUNCTIONALITY ==========
+function enableEdit(div) {
+    const oldTitle = div.querySelector('h2').innerText
+    const oldDesc = div.querySelector('p').innerText
+
+    const titleInput = document.createElement('input')
+    titleInput.value = oldTitle
+
+    const descInput = document.createElement('textarea')
+    descInput.value = oldDesc
+
+    const saveBtn = document.createElement('button')
+    saveBtn.innerText = 'Save'
+    saveBtn.classList.add('edit-btn')
+
+    const cancelBtn = document.createElement('button')
+    cancelBtn.innerText = 'Cancel'
+    cancelBtn.classList.add('delete-btn')
+
+    div.innerHTML = ''
+    div.appendChild(titleInput)
+    div.appendChild(descInput)
+    div.appendChild(cancelBtn)
+    div.appendChild(saveBtn)
+
+    // SAVE
+    saveBtn.addEventListener('click', () => {
+        div.innerHTML = `
+            <h2>${titleInput.value}</h2>
+            <p>${descInput.value}</p>
+            <button class="delete-btn">Delete</button>
+            <button class="edit-btn">Edit</button>
+        `
+        updateTaskCount()
+        attachEvents(div)
+    })
+
+    // CANCEL
+    cancelBtn.addEventListener('click', () => {
+        div.innerHTML = `
+            <h2>${oldTitle}</h2>
+            <p>${oldDesc}</p>
+            <button class="delete-btn">Delete</button>
+            <button class="edit-btn">Edit</button>
+        `
+        updateTaskCount()
+        attachEvents(div)
+    })
+}
+
+// ========== UPDATE COUNT + SAVE TO LOCAL STORAGE ==========
 function updateTaskCount() {
     allColumns.forEach((col) => {
         const tasks = col.querySelectorAll('.task')
         const count = col.querySelector('.count')
 
-        taskData[col.id] = Array.from(tasks)?.map((t) => {
-            return {
-                title: t.querySelector('h2').innerText,
-                desc: t.querySelector('p').innerText,
-            }
-        })
+        taskData[col.id] = Array.from(tasks).map((t) => ({
+            title: t.querySelector('h2').innerText,
+            desc: t.querySelector('p').innerText
+        }))
 
         localStorage.setItem('taskData', JSON.stringify(taskData))
-        count.innerHTML = tasks?.length
+        count.innerText = tasks.length
     })
 }
 
+// ========== LOAD SAVED TASKS ==========
 if (localStorage.getItem('taskData')) {
     const data = JSON.parse(localStorage.getItem('taskData'))
 
@@ -67,66 +124,58 @@ if (localStorage.getItem('taskData')) {
     updateTaskCount()
 }
 
-
+// ========== DRAG & DROP FUNCTIONALITY ==========
 const addDragEventOnColumn = (column) => {
-    //entering
     column.addEventListener('dragenter', (e) => {
-        e.preventDefault();
+        e.preventDefault()
         column.classList.add('hover-over')
     })
-    //leaving
+
     column.addEventListener('dragleave', (e) => {
-        e.preventDefault();
+        e.preventDefault()
         column.classList.remove('hover-over')
     })
 
-    //onhover
     column.addEventListener('dragover', (e) => {
         e.preventDefault()
     })
 
-    //drop
     column.addEventListener('drop', (e) => {
         e.preventDefault()
         column.appendChild(dragElement)
         column.classList.remove('hover-over')
-
         updateTaskCount()
     })
-
 }
+
 addDragEventOnColumn(todo)
 addDragEventOnColumn(progress)
 addDragEventOnColumn(done)
 
-
-// ===== modal code ======
-
+// ========== MODAL FUNCTIONALITY ==========
 const toogleBtn = document.querySelector('#toogle-modal')
 const backdrop = document.querySelector('.backdrop')
 const modal = document.querySelector('.modal')
 const addTaskBtn = document.querySelector('#add-task-btn')
 
-
 toogleBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+    e.preventDefault()
     modal.classList.toggle('active')
 })
-backdrop.addEventListener('click', (e) => {
-    e.preventDefault();
+
+backdrop.addEventListener('click', () => {
     modal.classList.remove('active')
 })
 
-addTaskBtn.addEventListener('click', (e) => {
-    const taskTitle = document.querySelector('#task-title').value
-    const taskDesc = document.querySelector('#task-desc').value
+addTaskBtn.addEventListener('click', () => {
+    const title = document.querySelector('#task-title').value
+    const desc = document.querySelector('#task-desc').value
 
-    addTask(taskTitle, taskDesc, todo)
+    addTask(title, desc, todo)
     updateTaskCount()
 
     document.querySelector('#task-title').value = ''
     document.querySelector('#task-desc').value = ''
-
 
     modal.classList.remove('active')
 })
