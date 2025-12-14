@@ -171,8 +171,13 @@ addTaskBtn.addEventListener('click', () => {
     const title = document.querySelector('#task-title').value
     const desc = document.querySelector('#task-desc').value
 
-    addTask(title, desc, todo)
-    updateTaskCount()
+    if (title === '' || desc === '') {
+        alert('Please fill the title and description')
+    } else {
+        addTask(title, desc, todo)
+        updateTaskCount()
+    }
+
 
     document.querySelector('#task-title').value = ''
     document.querySelector('#task-desc').value = ''
